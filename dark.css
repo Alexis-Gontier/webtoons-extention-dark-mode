@@ -1,0 +1,35 @@
+/* Inverse toute la page, puis ré-inverse les médias pour qu'ils gardent leurs vraies couleurs. */
+html.wt-dark {
+  /* #e8e8e8 inversé donne #171717 : un noir adouci. */
+  background: #e8e8e8 !important;
+  filter: invert(1) hue-rotate(180deg) !important;
+  /* La barre de défilement de la page n'est pas touchée par le filtre : couleurs finales. */
+  scrollbar-color: #4a4a4a #171717;
+}
+
+/* Fonds blancs du site légèrement grisés (voir content.js) pour éviter le noir pur une fois inversés. */
+html.wt-dark [data-wt-bg] {
+  background-color: var(--wt-bg) !important;
+}
+
+html.wt-dark img,
+html.wt-dark picture,
+html.wt-dark video,
+html.wt-dark canvas,
+html.wt-dark iframe,
+html.wt-dark [style*="background-image"] {
+  filter: invert(1) hue-rotate(180deg) !important;
+}
+
+/* Éléments déjà sombres sur le site : on les laisse tels quels. */
+html.wt-dark #toolbar {
+  filter: invert(1) hue-rotate(180deg) !important;
+}
+
+/* Évite la double ré-inversion d'une image placée dans un bloc déjà ré-inversé. */
+html.wt-dark [style*="background-image"] img,
+html.wt-dark picture img,
+html.wt-dark #toolbar img,
+html.wt-dark #toolbar [style*="background-image"] {
+  filter: none !important;
+}

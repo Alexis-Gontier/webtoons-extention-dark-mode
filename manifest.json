@@ -1,0 +1,20 @@
+{
+  "manifest_version": 3,
+  "name": "Webtoon Dark Mode",
+  "version": "1.0.0",
+  "description": "Ajoute un mode sombre à webtoons.com sans altérer les images des chapitres.",
+  "permissions": ["storage"],
+  "action": {
+    "default_title": "Webtoon Dark Mode",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.webtoons.com/*"],
+      "css": ["dark.css"],
+      "js": ["content.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ]
+}
