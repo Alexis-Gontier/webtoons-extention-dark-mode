@@ -1,35 +1,48 @@
-/* Inverse toute la page, puis ré-inverse les médias pour qu'ils gardent leurs vraies couleurs. */
+/* Inverse toute la page. invert(1) est sa propre réciproque : les médias ré-inversés plus bas
+   retrouvent exactement leurs couleurs d'origine, même les plus saturées. */
 html.wt-dark {
-  /* #e8e8e8 inversé donne #171717 : un noir adouci. */
-  background: #e8e8e8 !important;
-  filter: invert(1) hue-rotate(180deg) !important;
+  /* Couleur calculée par content.js pour donner le fond choisi une fois inversée. */
+  background: var(--wt-page, #e8e8e8) !important;
+  filter: invert(1) !important;
   /* La barre de défilement de la page n'est pas touchée par le filtre : couleurs finales. */
-  scrollbar-color: #4a4a4a #171717;
+  scrollbar-color: var(--wt-thumb, #4a4a4a) var(--wt-track, #171717);
 }
 
-/* Fonds blancs du site légèrement grisés (voir content.js) pour éviter le noir pur une fois inversés. */
-html.wt-dark [data-wt-bg] {
-  background-color: var(--wt-bg) !important;
+/* Couleurs du site recalculées par content.js : fonds clairs à la teinte choisie,
+   couleurs vives de l'interface qui gardent leur teinte. */
+html.wt-dark [data-wt-bg] { background-color: var(--wt-bg) !important; }
+html.wt-dark [data-wt-fg] { color: var(--wt-fg) !important; }
+html.wt-dark [data-wt-fill] { fill: var(--wt-fill) !important; }
+html.wt-dark [data-wt-stroke] { stroke: var(--wt-stroke) !important; }
+html.wt-dark [data-wt-border] { border-color: var(--wt-border) !important; }
+
+/* Médias, grandes images de fond et éléments déjà sombres du site (barre du lecteur) :
+   ré-inversés pour s'afficher tels quels. */
+html.wt-dark :is(img, picture, video, canvas, iframe, [style*="background-image"], [data-wt-picture], #toolbar.tool_area) {
+  filter: invert(1) !important;
 }
 
-html.wt-dark img,
-html.wt-dark picture,
-html.wt-dark video,
-html.wt-dark canvas,
-html.wt-dark iframe,
-html.wt-dark [style*="background-image"] {
+/* Mêmes règles pour les images de fond posées sur ::before / ::after (logo, icônes). */
+html.wt-dark [data-wt-picture-before]::before,
+html.wt-dark [data-wt-picture-after]::after {
+  filter: invert(1) !important;
+}
+
+/* Petites icônes en image de fond et texte contenant des emojis : luminosité inversée
+   comme le texte, teinte conservée. */
+html.wt-dark :is([data-wt-sprite], [data-wt-emoji]),
+html.wt-dark [data-wt-sprite-before]::before,
+html.wt-dark [data-wt-sprite-after]::after {
+  filter: hue-rotate(180deg) !important;
+}
+
+/* Image insérée dans un texte à emojis : on compense aussi le hue-rotate du parent. */
+html.wt-dark [data-wt-emoji] :is(img, picture, video, canvas) {
   filter: invert(1) hue-rotate(180deg) !important;
 }
 
-/* Éléments déjà sombres sur le site : on les laisse tels quels. */
-html.wt-dark #toolbar {
-  filter: invert(1) hue-rotate(180deg) !important;
-}
-
-/* Évite la double ré-inversion d'une image placée dans un bloc déjà ré-inversé. */
-html.wt-dark [style*="background-image"] img,
-html.wt-dark picture img,
-html.wt-dark #toolbar img,
-html.wt-dark #toolbar [style*="background-image"] {
+/* Évite la double ré-inversion à l'intérieur d'un bloc déjà ré-inversé. */
+html.wt-dark :is(img, picture, video, canvas, iframe, [style*="background-image"], [data-wt-picture], #toolbar.tool_area)
+  :is(img, picture, video, canvas, iframe, [style*="background-image"], [data-wt-picture], [data-wt-sprite]) {
   filter: none !important;
 }

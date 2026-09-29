@@ -1,16 +1,36 @@
 # Webtoon Dark Mode
 
+<img src="icons/icon128.png" alt="" width="64" height="64">
+
 Extension Chrome / Edge / Brave (Manifest V3) qui ajoute un mode sombre à [webtoons.com](https://www.webtoons.com), sans altérer les couleurs des planches.
+
+<p>
+  <img src="docs/home.png" alt="Page d'accueil de webtoons.com en mode sombre" width="640">
+  <img src="docs/popup.png" alt="Popup de l'extension avec le choix de la couleur de fond" width="220">
+</p>
+
+## Fonctionnalités
+
+- Mode sombre sur tout le site : accueil, listes, lecteur, commentaires.
+- Planches, couvertures et vidéos affichées avec leurs couleurs exactes.
+- Couleurs de l'interface conservées (logo, badges, emojis).
+- Palette de fonds au choix : Doux, OLED, Anthracite, Nuit, Ardoise, Sépia, Forêt, Prune, ou une couleur personnalisée.
+- Barre de défilement assortie au fond.
+- Bouton on/off dans la popup, appliqué en direct sur tous les onglets.
 
 ## Fonctionnement
 
-- La page est inversée (fond clair → sombre), puis les images, vidéos et iframes sont ré-inversées pour garder leurs vraies couleurs.
-- Les fonds blancs sont légèrement grisés avant inversion pour obtenir un gris très foncé (`#171717`) plutôt qu'un noir pur.
-- Barre de défilement sombre.
-- Bouton on/off dans la popup de l'extension, appliqué en direct sur tous les onglets.
+- La page entière est inversée avec `invert(1)`, et les médias sont ré-inversés. Comme `invert(1)` est sa propre réciproque et reste dans le gamut, les planches ressortent pixel pour pixel identiques.
+- `content.js` recalcule les couleurs du site : les fonds clairs prennent la couleur de fond choisie, et les couleurs vives de l'interface (textes, boutons, SVG, bordures) gardent leur teinte avec une luminosité inversée.
+- Les petites icônes en image de fond et le texte contenant des emojis reçoivent un `hue-rotate(180deg)` pour garder leur teinte.
+- Un `MutationObserver` suit les éléments ajoutés et les changements d'état (`class`, `aria-selected`…), par exemple quand on change d'onglet.
 
 ## Installation
 
 1. Ouvrir `chrome://extensions` (ou `edge://extensions`).
 2. Activer le **Mode développeur**.
 3. Cliquer sur **Charger l'extension non empaquetée** et choisir ce dossier.
+
+## Licence
+
+[MIT](LICENSE)

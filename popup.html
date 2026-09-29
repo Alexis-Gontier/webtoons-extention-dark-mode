@@ -2,14 +2,44 @@
 <html lang="fr">
 <head>
   <meta charset="utf-8">
-  <style>
-    body { margin: 0; padding: 14px 16px; width: 220px; font: 14px system-ui, sans-serif; background: #1b1b1b; color: #eee; }
-    label { display: flex; align-items: center; justify-content: space-between; cursor: pointer; }
-    input { width: 18px; height: 18px; accent-color: #00dc64; cursor: pointer; }
-  </style>
+  <link rel="stylesheet" href="popup.css">
 </head>
 <body>
-  <label>Mode sombre <input type="checkbox" id="toggle"></label>
+  <header>
+    <img src="icons/icon48.png" alt="" width="32" height="32">
+    <div class="title">
+      <h1>Webtoon Dark Mode</h1>
+      <p>pour webtoons.com</p>
+    </div>
+    <label class="switch" title="Activer / désactiver">
+      <input type="checkbox" id="toggle" aria-label="Mode sombre">
+      <span class="track"><span class="thumb"></span></span>
+    </label>
+  </header>
+
+  <main id="settings">
+    <section class="preview" aria-hidden="true">
+      <div class="panel"></div>
+      <div class="lines">
+        <span class="line strong"></span>
+        <span class="line"></span>
+        <span class="line short"></span>
+      </div>
+    </section>
+
+    <h2>Couleur du fond</h2>
+    <div class="palette" id="palette" role="radiogroup" aria-label="Couleur du fond"></div>
+
+    <label class="custom">
+      <span class="swatch custom-swatch"><input type="color" id="custom" value="#171717"></span>
+      <span class="custom-text">
+        <strong>Personnalisée</strong>
+        <code id="customHex">Choisir une couleur</code>
+      </span>
+    </label>
+  </main>
+
+  <footer>Les planches gardent leurs couleurs d'origine.</footer>
   <script src="popup.js"></script>
 </body>
 </html>
