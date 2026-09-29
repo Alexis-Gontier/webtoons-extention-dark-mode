@@ -4,11 +4,6 @@
 
 Extension Chrome / Edge / Brave (Manifest V3) qui ajoute un mode sombre à [webtoons.com](https://www.webtoons.com), sans altérer les couleurs des planches.
 
-<p>
-  <img src="docs/home.png" alt="Page d'accueil de webtoons.com en mode sombre" width="640">
-  <img src="docs/popup.png" alt="Popup de l'extension avec le choix de la couleur de fond" width="220">
-</p>
-
 ## Fonctionnalités
 
 - Mode sombre sur tout le site : accueil, listes, lecteur, commentaires.
